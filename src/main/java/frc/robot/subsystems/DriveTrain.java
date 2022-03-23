@@ -7,7 +7,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.Drive;
 
 public class DriveTrain extends SubsystemBase {
   public static int lFrontMotorPort = 29;   
@@ -19,6 +23,9 @@ public class DriveTrain extends SubsystemBase {
   public static TalonSRX RightFrontMotor = new TalonSRX(rFrontMotorPort);
   public static TalonSRX RightBackMotor = new TalonSRX(rBackMotorPort);
   /** Creates a new DriveTrain. */
+
+  ShuffleboardTab TalonFXTab = Shuffleboard.getTab("2019");
+  NetworkTableEntry lol2 = TalonFXTab.add("Slow Speed(From 0-1)", 1).getEntry();
   public DriveTrain() 
   {
         LeftFrontMotor.configContinuousCurrentLimit(32, 0);
@@ -47,5 +54,7 @@ public void setRightSpeed(double speed) {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    Drive.slowSpeed = lol2.getDouble(1);
+
   }
 }

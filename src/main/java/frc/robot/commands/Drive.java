@@ -11,6 +11,7 @@ import frc.robot.RobotContainer;
 public class Drive extends CommandBase {
   double leftSpeed;
   double rightSpeed;
+  public static double slowSpeed = 1;
   /** Creates a new Drive. */
   public Drive() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,17 +25,19 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Math.abs(RobotContainer.driveStick.getRawAxis(Constants.JOYSTICK_LEFT_AXIS)) > Constants.JOYSITCK_DEADBAND) {
-      leftSpeed = (RobotContainer.driveStick.getRawAxis(Constants.JOYSTICK_LEFT_AXIS));
-    }
-    else{
-      leftSpeed = 0;
-    }
-    if (Math.abs(RobotContainer.driveStick.getRawAxis(Constants.JOYSTICK_RIGHT_AXIS)) > Constants.JOYSITCK_DEADBAND) {
-      rightSpeed = (RobotContainer.driveStick.getRawAxis(Constants.JOYSTICK_RIGHT_AXIS));
-    }
-    else {
-      rightSpeed = 0;
+    if(slowSpeed <= 1){
+      if (Math.abs(RobotContainer.driveStick.getRawAxis(Constants.JOYSTICK_LEFT_AXIS)) > Constants.JOYSITCK_DEADBAND) {
+        leftSpeed = (RobotContainer.driveStick.getRawAxis(Constants.JOYSTICK_LEFT_AXIS)* slowSpeed);
+      }
+      else{
+        leftSpeed = 0;
+      }
+      if (Math.abs(RobotContainer.driveStick.getRawAxis(Constants.JOYSTICK_RIGHT_AXIS)) > Constants.JOYSITCK_DEADBAND) {
+        rightSpeed = (RobotContainer.driveStick.getRawAxis(Constants.JOYSTICK_RIGHT_AXIS)* slowSpeed);
+      }
+      else {
+        rightSpeed = 0;
+      }
     }
     RobotContainer.m_DriveTrain.setLeftSpeed(leftSpeed);
     RobotContainer.m_DriveTrain.setRightSpeed(rightSpeed);
